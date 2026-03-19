@@ -43,10 +43,32 @@ body {
   min-height: 100vh;
 }
 
+/* TOUCH DEVICE OPTIMIZATIONS */
+@media (hover: none) and (pointer: coarse) {
+  /* Touch devices */
+  button, a, .btn-gold, .btn-outline, .hamburger, .testimonial-btn {
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  /* Slightly larger touch targets on touch devices */
+  .btn-gold, .btn-outline {
+    min-height: 48px;
+    min-width: 48px;
+    padding: 13px 28px;
+  }
+  
+  .testimonial-btn {
+    min-width: 52px;
+    min-height: 52px;
+  }
+}
+
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Montserrat', sans-serif;
   font-weight: 700;
   line-height: 1.1;
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 a { text-decoration: none; color: inherit; }
@@ -69,6 +91,7 @@ a { text-decoration: none; color: inherit; }
   height: 100%;
   object-fit: cover;
   display: block; /* Always display the image */
+  max-width: 100%;
 }
 
 .img-slot .slot-pattern {
@@ -128,7 +151,7 @@ a { text-decoration: none; color: inherit; }
   gap: 10px;
   font-family: 'Montserrat', sans-serif;
   font-weight: 800;
-  font-size: 1.2rem;
+  font-size: clamp(1rem, 3vw, 1.2rem);
   cursor: pointer;
   letter-spacing: -0.3px;
 }
@@ -260,16 +283,23 @@ a { text-decoration: none; color: inherit; }
   align-items: center;
   justify-content: center;
   gap: 28px;
+  padding: 0 20px;
+  overflow-y: auto;
 }
 
 .mobile-menu.open { display: flex; }
 
 .mobile-menu a {
   color: var(--white);
-  font-size: 1.3rem;
+  font-size: clamp(1.1rem, 4vw, 1.3rem);
   font-family: 'Montserrat', sans-serif;
   font-weight: 600;
   cursor: pointer;
+  padding: 12px 20px;
+  display: block;
+  text-align: center;
+  min-width: 150px;
+  transition: all 0.3s;
 }
 
 .mobile-menu a:hover { color: var(--gold); }
@@ -587,6 +617,8 @@ a { text-decoration: none; color: inherit; }
 
 .card:hover::before { transform: scaleX(1); }
 
+.card:active { transform: translateY(-6px); }
+
 .card-number {
   font-family: 'Montserrat', sans-serif;
   font-weight: 900;
@@ -617,6 +649,8 @@ a { text-decoration: none; color: inherit; }
   position: relative;
   overflow: hidden;
 }
+
+.trust-item:active { transform: scale(0.98); }
 
 .trust-item::after {
   content: '';
@@ -1248,89 +1282,81 @@ a { text-decoration: none; color: inherit; }
 /* TESTIMONIALS CAROUSEL */
 .testimonials-carousel {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 24px;
+  grid-template-columns: 1fr 1fr;
+  gap: 50px;
+  align-items: center;
   margin-top: 60px;
 }
 
-.testimonial-card {
-  background: var(--white);
-  border: 1px solid rgba(11, 31, 51, 0.08);
-  border-radius: 16px;
-  padding: 32px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 4px 16px rgba(11, 31, 51, 0.06);
+.testimonial-image-section {
   position: relative;
-  overflow: hidden;
-}
-
-.testimonial-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: linear-gradient(90deg, var(--gold), var(--gold-hover));
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.testimonial-card:hover {
-  border-color: rgba(245, 183, 0, 0.2);
-  box-shadow: 0 12px 32px rgba(11, 31, 51, 0.12);
-  transform: translateY(-4px);
-}
-
-.testimonial-card:hover::before {
-  transform: scaleX(1);
-}
-
-.testimonial-card-header {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-
-.testimonial-avatar {
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--gold), var(--gold-hover));
+  height: 400px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--navy);
-  font-weight: 700;
+}
+
+.testimonial-image-container {
+  position: relative;
+  width: 280px;
+  height: 350px;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(11, 31, 51, 0.15);
+}
+
+.testimonial-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: scale(1.1);
+}
+
+.testimonial-image.active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.testimonial-content-section {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.testimonial-content {
+  position: relative;
+  min-height: 220px;
+}
+
+.testimonial-item {
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.testimonial-item.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.testimonial-item h3 {
   font-size: 1.2rem;
-  flex-shrink: 0;
-}
-
-.testimonial-card-meta {
-  flex: 1;
-}
-
-.testimonial-card h3 {
-  font-size: 1.1rem;
-  margin-bottom: 4px;
+  margin-bottom: 6px;
   font-weight: 700;
   color: var(--navy);
 }
 
 .testimonial-title {
   color: var(--gold);
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.testimonial-card-body {
-  flex: 1;
+  margin-bottom: 16px;
 }
 
 .testimonial-quote {
@@ -1340,13 +1366,36 @@ a { text-decoration: none; color: inherit; }
   font-style: italic;
 }
 
-.testimonial-card-stars {
+.testimonial-nav {
   display: flex;
-  gap: 4px;
-  color: var(--gold);
-  font-size: 0.9rem;
+  gap: 12px;
 }
-  box-shadow: 0 8px 24px rgba(245, 183, 0, 0.35);
+
+.testimonial-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(245, 183, 0, 0.1);
+  border: 1.5px solid var(--gold);
+  color: var(--gold);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  -webkit-tap-highlight-color: transparent;
+  transition: all 0.3s;
+  transition: all 0.3s;
+}
+
+.testimonial-btn:hover {
+  background: var(--gold);
+  color: var(--navy);
+  transform: translateY(-2px);
+}
+
+.testimonial-btn svg {
+  width: 20px;
+  height: 20px;
 }
 
 @media (max-width: 768px) {
@@ -1384,32 +1433,143 @@ a { text-decoration: none; color: inherit; }
   .hero-content { margin-left: 5%; }
   .hero-image-slot { width: 45%; opacity: 0.7; }
   .testimonials-carousel { grid-template-columns: repeat(2, 1fr); }
+  .contact-grid { gap: 48px; }
+  .testimonial-image-container { width: 240px; height: 300px; }
 }
 
 @media (max-width: 768px) {
+  /* Navigation */
   .nav-links { display: none; }
   .hamburger { display: flex; }
+  
+  /* Grid Layouts */
   .cards-grid, .values-grid, .asset-cards, .blog-grid, .criteria-grid { grid-template-columns: 1fr; }
   .trust-grid, .stats-row { grid-template-columns: 1fr 1fr; }
   .timeline { grid-template-columns: 1fr; gap: 24px; }
-  .about-grid, .contact-grid { grid-template-columns: 1fr; }
+  .about-grid { grid-template-columns: 1fr; gap: 40px; }
+  .contact-grid { grid-template-columns: 1fr; gap: 40px; }
   .form-row { grid-template-columns: 1fr; }
   .footer-grid { grid-template-columns: 1fr; gap: 32px; }
-  .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
-  .section { padding: 80px 0; }
-  .process-detail { grid-template-columns: 56px 1fr; gap: 20px; }
-  .process-num { width: 48px; height: 48px; font-size: 1.1rem; }
+  
+  /* Sections & Padding */
+  .section { padding: 60px 0; }
+  .section-header { margin-bottom: 48px; }
+  .section-header h2 { font-size: clamp(1.5rem, 4vw, 2.5rem); }
+  
+  /* Hero */
   .hero-content { margin-left: 0; text-align: center; }
   .hero-content p { margin-left: auto; margin-right: auto; }
   .hero-image-slot { width: 100%; opacity: 0.3; }
-  .about-grid { gap: 40px; }
+  .scroll-indicator { bottom: 30px; }
+  
+  /* Process */
+  .process-detail { grid-template-columns: 48px 1fr; gap: 16px; }
+  .process-num { width: 44px; height: 44px; font-size: 1rem; }
+  .process-timeline-bar { gap: 20px; }
+  
+  /* About */
   .about-visual { height: 280px; }
+  .about-text h3 { font-size: 1.4rem; margin-bottom: 16px; }
+  
+  /* Testimonials */
+  .testimonials-carousel { grid-template-columns: 1fr; }
+  .testimonial-image-section { height: auto; margin-bottom: 40px; }
+  .testimonial-image-container { width: 220px; height: 280px; }
+  .testimonial-content-section { gap: 24px; }
+  .testimonial-item h3 { font-size: 1.1rem; }
+  .testimonial-quote { font-size: 0.9rem; }
+  
+  /* Contact & Forms */
+  .contact-info-side { padding: 32px; }
+  .form-group { margin-bottom: 16px; }
+  .form-group label { font-size: 0.8rem; margin-bottom: 6px; }
+  .form-group input, .form-group textarea { padding: 12px 16px; font-size: 0.9rem; }
+  .form-group textarea { height: 100px; }
+  
+  /* Footer */
+  .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
+  .footer-brand h3 { font-size: 1.3rem; margin-bottom: 12px; }
 }
 
 @media (max-width: 480px) {
+  /* Grid Layouts */
   .trust-grid, .stats-row { grid-template-columns: 1fr; }
-  .hero-btns { flex-direction: column; width: 100%; }
-  .hero-btns .btn-gold, .hero-btns .btn-outline { width: 100%; text-align: center; justify-content: center; }
+  .cards-grid, .values-grid, .asset-cards, .blog-grid, .criteria-grid { gap: 16px; }
+  
+  /* Sections & Padding */
+  .section { padding: 48px 0; }
+  .container { padding: 0 16px; }
+  .section-header { margin-bottom: 36px; }
+  .section-header .overline { font-size: 0.7rem; }
+  .section-header h2 { font-size: 1.5rem; margin-bottom: 12px; }
+  
+  /* Hero */
+  .hero { padding-top: 100px; }
+  .hero h1 { font-size: clamp(2rem, 5vw, 3rem); margin-bottom: 16px; }
+  .hero p { font-size: 0.95rem; margin-bottom: 24px; }
+  .hero-btns { flex-direction: column; width: 100%; gap: 12px; }
+  .hero-btns .btn-gold, .hero-btns .btn-outline { width: 100%; text-align: center; justify-content: center; padding: 14px 24px; }
+  
+  /* Cards */
+  .card h3 { font-size: 1.1rem; }
+  .card p { font-size: 0.85rem; }
+  
+  /* Trust & Timeline */
+  .trust-item { padding: 24px 20px; }
+  .trust-item h4 { font-size: 0.9rem; }
+  .trust-item p { font-size: 0.85rem; }
+  
+  .timeline-step { padding: 24px; }
+  .step-number { width: 40px; height: 40px; font-size: 1rem; }
+  .timeline-step h4 { font-size: 0.9rem; margin-bottom: 8px; }
+  .timeline-step p { font-size: 0.85rem; }
+  
+  /* CTA Section */
+  .cta-section h2 { font-size: 1.6rem; margin-bottom: 16px; }
+  .cta-section p { font-size: 0.9rem; }
+  
+  /* Page Hero */
+  .page-hero { padding: 80px 0 40px; }
+  .page-hero h1 { font-size: 1.8rem; }
+  
+  /* Blog Cards */
+  .blog-card-img { height: 180px; }
+  .blog-card-body { padding: 24px; }
+  .blog-card-body h3 { font-size: 1rem; margin-bottom: 8px; }
+  .blog-card-body p { font-size: 0.85rem; }
+  
+  /* Testimonials */
+  .testimonial-carousel-section { padding: 40px 0; }
+  .testimonial-image-container { width: 180px; height: 240px; }
+  .testimonial-item h3 { font-size: 1rem; margin-bottom: 4px; }
+  .testimonial-title { font-size: 0.8rem; margin-bottom: 12px; }
+  .testimonial-quote { font-size: 0.85rem; line-height: 1.6; }
+  .testimonial-btn { width: 44px; height: 44px; }
+  
+  /* Contact & Forms */
+  .contact-grid { gap: 30px; }
+  .contact-info-side { padding: 24px; }
+  .contact-info-side h3 { font-size: 1.3rem; margin-bottom: 12px; }
+  .contact-info-item { margin-bottom: 20px; }
+  .contact-info-item h4 { font-size: 0.9rem; margin-bottom: 6px; }
+  .contact-info-item p { font-size: 0.85rem; }
+  
+  .form-group { margin-bottom: 14px; }
+  .form-group label { font-size: 0.75rem; margin-bottom: 4px; display: inline-block; }
+  .form-group input, .form-group textarea { padding: 10px 14px; font-size: 0.9rem; }
+  .form-group textarea { height: 80px; }
+  
+  /* Buttons */
+  .btn-gold, .btn-outline { font-size: 0.9rem; padding: 12px 20px; }
+  
+  /* Scroll Animation */
+  .scroll-container { height: 400px; margin-bottom: 60px; }
+  .scroll-title h2 { font-size: 1.4rem; margin-bottom: 20px; }
+  
+  /* Footer */
+  .footer { padding: 40px 0 24px; }
+  .footer-col h4 { font-size: 1rem; margin-bottom: 12px; }
+  .footer-col { margin-bottom: 24px; }
 }
 
 /* SCROLL ANIMATION CONTAINER */
@@ -1832,7 +1992,7 @@ a { text-decoration: none; color: inherit; }
     </div>
   </section>
 
-  <!-- TESTIMONIALS CARDS GRID -->
+  <!-- TESTIMONIALS CAROUSEL -->
   <section class="section">
     <div class="container">
       <div class="section-header reveal">
@@ -1840,116 +2000,73 @@ a { text-decoration: none; color: inherit; }
         <h2>What Our Partners Say</h2>
         <p>Hear from asset owners who have successfully sold their solar farms to Repowering Partners.</p>
       </div>
-      <div class="testimonials-carousel">
-        <div class="testimonial-card reveal scale-reveal stagger-0">
-          <div class="testimonial-card-header">
-            <div class="testimonial-avatar">SC</div>
-            <div class="testimonial-card-meta">
+      <div class="testimonials-carousel reveal">
+        <div class="testimonial-image-section">
+          <div class="testimonial-image-container" id="testimonialImages">
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=500&auto=format&fit=crop" alt="Sarah Chen" class="testimonial-image active">
+            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=500&auto=format&fit=crop" alt="Michael Rodriguez" class="testimonial-image">
+            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=500&auto=format&fit=crop" alt="Emily Watson" class="testimonial-image">
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=500&auto=format&fit=crop" alt="James Kim" class="testimonial-image">
+            <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=500&auto=format&fit=crop" alt="Jessica Martinez" class="testimonial-image">
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=500&auto=format&fit=crop" alt="David Li" class="testimonial-image">
+            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=500&auto=format&fit=crop" alt="Robert Peterson" class="testimonial-image">
+            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=500&auto=format&fit=crop" alt="Katherine Chen" class="testimonial-image">
+          </div>
+        </div>
+        <div class="testimonial-content-section">
+          <div class="testimonial-content" id="testimonialContent">
+            <div class="testimonial-item active">
               <h3>Sarah Chen</h3>
               <p class="testimonial-title">Asset Owner, 5MW Solar Farm</p>
+              <p class="testimonial-quote">The process was incredibly smooth. Within weeks, we had a binding offer and closed the transaction. The Repowering Partners team was professional and transparent throughout.</p>
             </div>
-          </div>
-          <div class="testimonial-card-stars">★★★★★</div>
-          <div class="testimonial-card-body">
-            <p class="testimonial-quote">"The process was incredibly smooth. Within weeks, we had a binding offer and closed the transaction. The Repowering Partners team was professional and transparent throughout."</p>
-          </div>
-        </div>
-
-        <div class="testimonial-card reveal scale-reveal stagger-1">
-          <div class="testimonial-card-header">
-            <div class="testimonial-avatar">MR</div>
-            <div class="testimonial-card-meta">
+            <div class="testimonial-item">
               <h3>Michael Rodriguez</h3>
               <p class="testimonial-title">Portfolio Manager, 3 Assets</p>
+              <p class="testimonial-quote">We sold multiple assets to Repowering Partners. Their valuation was fair and their ability to close quickly gave us the capital we needed for our next ventures.</p>
             </div>
-          </div>
-          <div class="testimonial-card-stars">★★★★★</div>
-          <div class="testimonial-card-body">
-            <p class="testimonial-quote">"We sold multiple assets to Repowering Partners. Their valuation was fair and their ability to close quickly gave us the capital we needed for our next ventures."</p>
-          </div>
-        </div>
-
-        <div class="testimonial-card reveal scale-reveal stagger-2">
-          <div class="testimonial-card-header">
-            <div class="testimonial-avatar">EW</div>
-            <div class="testimonial-card-meta">
+            <div class="testimonial-item">
               <h3>Emily Watson</h3>
               <p class="testimonial-title">Solar Farm Operator, 8MW Installation</p>
+              <p class="testimonial-quote">As operators, we trusted them to upgrade and maintain our asset responsibly. Their long-term ownership philosophy aligns perfectly with what we believe in.</p>
             </div>
-          </div>
-          <div class="testimonial-card-stars">★★★★★</div>
-          <div class="testimonial-card-body">
-            <p class="testimonial-quote">"As operators, we trusted them to upgrade and maintain our asset responsibly. Their long-term ownership philosophy aligns perfectly with what we believe in."</p>
-          </div>
-        </div>
-
-        <div class="testimonial-card reveal scale-reveal stagger-3">
-          <div class="testimonial-card-header">
-            <div class="testimonial-avatar">JK</div>
-            <div class="testimonial-card-meta">
+            <div class="testimonial-item">
               <h3>James Kim</h3>
               <p class="testimonial-title">Investment Director, Strategic Investor</p>
+              <p class="testimonial-quote">The entire experience was hassle-free. They handled all complexities, and we appreciated their expertise in navigating the technical requirements.</p>
             </div>
-          </div>
-          <div class="testimonial-card-stars">★★★★★</div>
-          <div class="testimonial-card-body">
-            <p class="testimonial-quote">"The entire experience was hassle-free. They handled all complexities, and we appreciated their expertise in navigating the technical requirements."</p>
-          </div>
-        </div>
-
-        <div class="testimonial-card reveal scale-reveal stagger-0">
-          <div class="testimonial-card-header">
-            <div class="testimonial-avatar">JM</div>
-            <div class="testimonial-card-meta">
+            <div class="testimonial-item">
               <h3>Jessica Martinez</h3>
               <p class="testimonial-title">Project Director, Engineering Firm</p>
+              <p class="testimonial-quote">They understood our engineering constraints and worked with us every step of the way. A truly collaborative partner in the renewable energy space.</p>
             </div>
-          </div>
-          <div class="testimonial-card-stars">★★★★★</div>
-          <div class="testimonial-card-body">
-            <p class="testimonial-quote">"They understood our engineering constraints and worked with us every step of the way. A truly collaborative partner in the renewable energy space."</p>
-          </div>
-        </div>
-
-        <div class="testimonial-card reveal scale-reveal stagger-1">
-          <div class="testimonial-card-header">
-            <div class="testimonial-avatar">DL</div>
-            <div class="testimonial-card-meta">
+            <div class="testimonial-item">
               <h3>David Li</h3>
               <p class="testimonial-title">Operations Manager, 12MW Portfolio</p>
+              <p class="testimonial-quote">Their operational expertise has significantly improved our asset performance. Partnering with them was the best decision we made for our portfolio.</p>
             </div>
-          </div>
-          <div class="testimonial-card-stars">★★★★★</div>
-          <div class="testimonial-card-body">
-            <p class="testimonial-quote">"Their operational expertise has significantly improved our asset performance. Partnering with them was the best decision we made for our portfolio."</p>
-          </div>
-        </div>
-
-        <div class="testimonial-card reveal scale-reveal stagger-2">
-          <div class="testimonial-card-header">
-            <div class="testimonial-avatar">RP</div>
-            <div class="testimonial-card-meta">
+            <div class="testimonial-item">
               <h3>Robert Peterson</h3>
               <p class="testimonial-title">CEO, Energy Investments Inc</p>
+              <p class="testimonial-quote">We've worked with many solar acquisition firms. Repowering Partners stands out for their integrity, speed, and deep technical knowledge.</p>
             </div>
-          </div>
-          <div class="testimonial-card-stars">★★★★★</div>
-          <div class="testimonial-card-body">
-            <p class="testimonial-quote">"We've worked with many solar acquisition firms. Repowering Partners stands out for their integrity, speed, and deep technical knowledge."</p>
-          </div>
-        </div>
-
-        <div class="testimonial-card reveal scale-reveal stagger-3">
-          <div class="testimonial-card-header">
-            <div class="testimonial-avatar">KC</div>
-            <div class="testimonial-card-meta">
+            <div class="testimonial-item">
               <h3>Katherine Chen</h3>
               <p class="testimonial-title">Finance Director, Infrastructure Fund</p>
+              <p class="testimonial-quote">They provided transparent financial terms and delivered exactly what they promised. Exceptional partner for long-term renewable infrastructure investments.</p>
             </div>
           </div>
-          <div class="testimonial-card-stars">★★★★★</div>
-          <div class="testimonial-card-body">
-            <p class="testimonial-quote">"They provided transparent financial terms and delivered exactly what they promised. Exceptional partner for long-term renewable infrastructure investments."</p>
+          <div class="testimonial-nav">
+            <button class="testimonial-btn prev" onclick="testimonialPrev()">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="15 18 9 12 15 6"></polyline>
+              </svg>
+            </button>
+            <button class="testimonial-btn next" onclick="testimonialNext()">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </button>
           </div>
         </div>
       </div>
@@ -2523,6 +2640,25 @@ function initReveal() {
   els.forEach(el => { if (!el.classList.contains('visible')) observer.observe(el); });
 }
 initReveal();
+
+// Testimonial navigation
+let currentTestimonial = 0;
+function updateTestimonial() {
+  const images = document.querySelectorAll('.testimonial-image');
+  const items = document.querySelectorAll('.testimonial-item');
+  images.forEach((img, i) => img.classList.toggle('active', i === currentTestimonial));
+  items.forEach((item, i) => item.classList.toggle('active', i === currentTestimonial));
+}
+function testimonialNext() {
+  const totalTestimonials = document.querySelectorAll('.testimonial-item').length;
+  currentTestimonial = (currentTestimonial + 1) % totalTestimonials;
+  updateTestimonial();
+}
+function testimonialPrev() {
+  const totalTestimonials = document.querySelectorAll('.testimonial-item').length;
+  currentTestimonial = (currentTestimonial - 1 + totalTestimonials) % totalTestimonials;
+  updateTestimonial();
+}
 
 function submitForm() {
   const form = document.getElementById('contactForm');
