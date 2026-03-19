@@ -1521,6 +1521,150 @@ a { text-decoration: none; color: inherit; }
 .animate-fifth { animation: moveInCircle 20s ease infinite; }
 
 /* Gradient animations now smoothly integrated into .section-dark, .page-hero, and .cta-section */
+
+/* ADVANCED SCROLL ANIMATIONS */
+/* Parallax background effect */
+.parallax-bg {
+  position: relative;
+  overflow: hidden;
+}
+
+.parallax-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  will-change: transform;
+}
+
+/* Blur in/out animations */
+.blur-fade {
+  opacity: 0;
+  filter: blur(10px);
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.blur-fade.active {
+  opacity: 1;
+  filter: blur(0px);
+}
+
+/* Scale reveal animation */
+.scale-reveal {
+  opacity: 0;
+  transform: scale(0.85);
+  transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.scale-reveal.active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Text letter reveal animation */
+.text-reveal {
+  display: inline;
+}
+
+.text-reveal .letter {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.text-reveal.active .letter {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Floating lift effect */
+@keyframes floatUp {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+  100% { transform: translateY(0px); }
+}
+
+.float-element {
+  will-change: transform;
+}
+
+.float-element.animate {
+  animation: floatUp 3s ease-in-out infinite;
+}
+
+/* Progress bar animation */
+.progress-bar {
+  height: 4px;
+  background: linear-gradient(90deg, var(--gold), var(--gold-hover));
+  border-radius: 2px;
+  width: 0%;
+  transition: width 0.1s linear;
+  will-change: width;
+}
+
+/* Stagger animation delays */
+.stagger-0 { transition-delay: 0s; }
+.stagger-1 { transition-delay: 0.1s; }
+.stagger-2 { transition-delay: 0.2s; }
+.stagger-3 { transition-delay: 0.3s; }
+.stagger-4 { transition-delay: 0.4s; }
+.stagger-5 { transition-delay: 0.5s; }
+
+/* Slide and fade animations */
+.slide-in-left {
+  opacity: 0;
+  transform: translateX(-60px);
+  transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.slide-in-left.active {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.slide-in-right {
+  opacity: 0;
+  transform: translateX(60px);
+  transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.slide-in-right.active {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Gradient shift animation */
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.gradient-shift {
+  background-size: 200% 200%;
+  animation: gradientShift 6s ease infinite;
+}
+
+/* Number counter style */
+.counter-value {
+  display: inline-block;
+  font-weight: 700;
+  color: var(--gold);
+}
+
+/* Rotate in animation */
+.rotate-in {
+  opacity: 0;
+  transform: rotate(-10deg) scale(0.8);
+  transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.rotate-in.active {
+  opacity: 1;
+  transform: rotate(0deg) scale(1);
+}
 </style>
 </head>
 <body>
@@ -1570,9 +1714,9 @@ a { text-decoration: none; color: inherit; }
       </div>
     </div>
     <div class="hero-content">
-      <div class="hero-badge"><span class="hero-badge-dot"></span> Solar Asset Acquisition & Repowering</div>
-      <h1>SELL YOUR<br>SOLAR FARM TO<br><span class="gold">REPOWERING<br>PARTNERS</span></h1>
-      <p>We acquire and modernize existing solar assets across the United States. Fast closings, flexible structures, and a commitment to long-term infrastructure ownership.</p>
+      <div class="hero-badge float-element"><span class="hero-badge-dot"></span> Solar Asset Acquisition & Repowering</div>
+      <h1 class="rotate-in">SELL YOUR<br>SOLAR FARM TO<br><span class="gold">REPOWERING<br>PARTNERS</span></h1>
+      <p class="blur-fade">We acquire and modernize existing solar assets across the United States. Fast closings, flexible structures, and a commitment to long-term infrastructure ownership.</p>
       <div class="hero-btns">
         <button class="btn-gold btn-arrow" onclick="navigateTo('contact')">Request an Offer</button>
         <button class="btn-outline" onclick="navigateTo('contact')">Contact Us</button>
@@ -1599,9 +1743,9 @@ a { text-decoration: none; color: inherit; }
         <p>We acquire, upgrade, and operate solar energy assets for the long term — maximizing performance and value at every stage.</p>
       </div>
       <div class="cards-grid">
-        <div class="card reveal" style="transition-delay:0.1s"><div class="card-number">01</div><h3>Acquire</h3><p>We purchase operating or underperforming solar farms across North America, offering competitive pricing and streamlined transactions.</p></div>
-        <div class="card reveal" style="transition-delay:0.2s"><div class="card-number">02</div><h3>Repower</h3><p>We upgrade aging equipment with modern high-efficiency panels and inverters, significantly improving energy output and revenue.</p></div>
-        <div class="card reveal" style="transition-delay:0.3s"><div class="card-number">03</div><h3>Operate</h3><p>We own and manage assets for the long term with best-in-class O&M practices, ensuring maximum uptime and returns.</p></div>
+        <div class="card reveal scale-reveal stagger-0" style="transition-delay:0.1s"><div class="card-number">01</div><h3>Acquire</h3><p>We purchase operating or underperforming solar farms across North America, offering competitive pricing and streamlined transactions.</p></div>
+        <div class="card reveal scale-reveal stagger-1" style="transition-delay:0.2s"><div class="card-number">02</div><h3>Repower</h3><p>We upgrade aging equipment with modern high-efficiency panels and inverters, significantly improving energy output and revenue.</p></div>
+        <div class="card reveal scale-reveal stagger-2" style="transition-delay:0.3s"><div class="card-number">03</div><h3>Operate</h3><p>We own and manage assets for the long term with best-in-class O&M practices, ensuring maximum uptime and returns.</p></div>
       </div>
     </div>
   </section>
@@ -1614,20 +1758,20 @@ a { text-decoration: none; color: inherit; }
         <p>We understand the complexities of solar asset transactions and make the process seamless.</p>
       </div>
       <div class="trust-grid">
-        <div class="trust-item reveal" style="transition-delay:0.1s">
-          <div class="trust-icon-wrap"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+        <div class="trust-item reveal slide-in-left stagger-0" style="transition-delay:0.1s">
+          <div class="trust-icon-wrap float-element"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
           <h4>Fast Acquisition Process</h4><p>Indicative offers within days, not months. We move at the speed of your timeline.</p>
         </div>
-        <div class="trust-item reveal" style="transition-delay:0.2s">
-          <div class="trust-icon-wrap"><svg viewBox="0 0 24 24"><path d="M16 3h5v5"/><path d="M8 3H3v5"/><path d="M21 3l-7 7"/><path d="M3 3l7 7"/><path d="M3 21l7-7"/><path d="M21 21l-7-7"/><path d="M16 21h5v-5"/><path d="M8 21H3v-5"/></svg></div>
+        <div class="trust-item reveal slide-in-left stagger-1" style="transition-delay:0.2s">
+          <div class="trust-icon-wrap float-element"><svg viewBox="0 0 24 24"><path d="M16 3h5v5"/><path d="M8 3H3v5"/><path d="M21 3l-7 7"/><path d="M3 3l7 7"/><path d="M3 21l7-7"/><path d="M21 21l-7-7"/><path d="M16 21h5v-5"/><path d="M8 21H3v-5"/></svg></div>
           <h4>Flexible Deal Structures</h4><p>Customized transaction terms tailored to meet your specific requirements.</p>
         </div>
-        <div class="trust-item reveal" style="transition-delay:0.3s">
-          <div class="trust-icon-wrap"><svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
+        <div class="trust-item reveal slide-in-right stagger-2" style="transition-delay:0.3s">
+          <div class="trust-icon-wrap float-element"><svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
           <h4>Experienced Investors</h4><p>Deep expertise in energy infrastructure, project finance, and renewable operations.</p>
         </div>
-        <div class="trust-item reveal" style="transition-delay:0.4s">
-          <div class="trust-icon-wrap"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+        <div class="trust-item reveal slide-in-right stagger-3" style="transition-delay:0.4s">
+          <div class="trust-icon-wrap float-element"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
           <h4>Long-term Ownership</h4><p>We're permanent capital owners — we hold and operate for decades, not quarters.</p>
         </div>
       </div>
@@ -1642,10 +1786,10 @@ a { text-decoration: none; color: inherit; }
         <p>From first contact to closing, we move quickly and communicate clearly at every step.</p>
       </div>
       <div class="timeline reveal">
-        <div class="timeline-step"><div class="step-number">1</div><h4>Submit Info</h4><p>Share basic details about your solar asset.</p></div>
-        <div class="timeline-step"><div class="step-number">2</div><h4>Evaluation</h4><p>We provide a preliminary assessment and indicative offer.</p></div>
-        <div class="timeline-step"><div class="step-number">3</div><h4>Due Diligence</h4><p>Detailed technical and financial review of the asset.</p></div>
-        <div class="timeline-step"><div class="step-number">4</div><h4>Closing</h4><p>Transaction execution and seamless ownership transfer.</p></div>
+        <div class="timeline-step rotate-in stagger-0"><div class="step-number">1</div><h4>Submit Info</h4><p>Share basic details about your solar asset.</p></div>
+        <div class="timeline-step rotate-in stagger-1"><div class="step-number">2</div><h4>Evaluation</h4><p>We provide a preliminary assessment and indicative offer.</p></div>
+        <div class="timeline-step rotate-in stagger-2"><div class="step-number">3</div><h4>Due Diligence</h4><p>Detailed technical and financial review of the asset.</p></div>
+        <div class="timeline-step rotate-in stagger-3"><div class="step-number">4</div><h4>Closing</h4><p>Transaction execution and seamless ownership transfer.</p></div>
       </div>
       <div style="text-align:center;margin-top:56px" class="reveal">
         <button class="btn-gold btn-arrow" onclick="navigateTo('process')">Learn More About Our Process</button>
@@ -1661,32 +1805,32 @@ a { text-decoration: none; color: inherit; }
         <p>From utility-scale to aging installations — we evaluate all types of solar assets for acquisition.</p>
       </div>
       <div class="asset-cards">
-        <div class="asset-card reveal" style="transition-delay:0.1s">
-          <div class="asset-card-visual">
+        <div class="asset-card reveal scale-reveal stagger-0" style="transition-delay:0.1s">
+          <div class="asset-card-visual blur-fade">
             <div class="img-slot" data-slot="asset1">
               <div class="slot-pattern"></div><img src="theres.jpg" alt="Utility Scale Solar Farm">
             </div>
           </div>
           <div class="asset-card-body"><h3>Utility-Scale Solar Farms</h3><p>Large-scale solar installations connected to the grid, typically 5 MW and above.</p></div>
         </div>
-        <div class="asset-card reveal" style="transition-delay:0.2s">
-          <div class="asset-card-visual">
+        <div class="asset-card reveal scale-reveal stagger-1" style="transition-delay:0.2s">
+          <div class="asset-card-visual blur-fade">
             <div class="img-slot" data-slot="asset2">
               <div class="slot-pattern"></div><img src="they1.jpg" alt="Solar Installation">
             </div>
           </div>
           <div class="asset-card-body"><h3>Aging Solar Installations</h3><p>Older solar assets with degraded panels or outdated inverter technology ready for repowering.</p></div>
         </div>
-        <div class="asset-card reveal" style="transition-delay:0.3s">
-          <div class="asset-card-visual">
+        <div class="asset-card reveal scale-reveal stagger-2" style="transition-delay:0.3s">
+          <div class="asset-card-visual blur-fade">
             <div class="img-slot" data-slot="asset3">
               <div class="slot-pattern"></div><img src="theys.jpg" alt="Solar Field">
             </div>
           </div>
           <div class="asset-card-body"><h3>Underperforming Assets</h3><p>Projects producing below their expected output due to equipment or design issues.</p></div>
         </div>
-        <div class="asset-card reveal" style="transition-delay:0.4s">
-          <div class="asset-card-visual">
+        <div class="asset-card reveal scale-reveal stagger-3" style="transition-delay:0.4s">
+          <div class="asset-card-visual blur-fade">
             <div class="img-slot" data-slot="asset4">
               <div class="slot-pattern"></div><img src="they1.jpg" alt="Solar Installation Work">
             </div>
@@ -1886,20 +2030,20 @@ a { text-decoration: none; color: inherit; }
         <p>Our investment strategy targets several categories of solar assets across North America.</p>
       </div>
       <div class="asset-cards">
-        <div class="asset-card reveal" style="transition-delay:0.1s">
-          <div class="asset-card-visual"><div class="img-slot" data-slot="assets-p1"><div class="slot-pattern"></div><img src="theys.jpg" alt="Operating Solar Farm"></div></div>
+        <div class="asset-card reveal scale-reveal stagger-0" style="transition-delay:0.1s">
+          <div class="asset-card-visual blur-fade"><div class="img-slot" data-slot="assets-p1"><div class="slot-pattern"></div><img src="theys.jpg" alt="Operating Solar Farm"></div></div>
           <div class="asset-card-body"><h3>Operating Solar Farms</h3><p>Fully operational solar farms producing energy and generating revenue. We acquire performing assets from owners looking to exit or redeploy capital.</p></div>
         </div>
-        <div class="asset-card reveal" style="transition-delay:0.2s">
-          <div class="asset-card-visual"><div class="img-slot" data-slot="assets-p2"><div class="slot-pattern"></div><img src="the1.jpg" alt="Solar Installation"></div></div>
+        <div class="asset-card reveal scale-reveal stagger-1" style="transition-delay:0.2s">
+          <div class="asset-card-visual blur-fade"><div class="img-slot" data-slot="assets-p2"><div class="slot-pattern"></div><img src="the1.jpg" alt="Solar Installation"></div></div>
           <div class="asset-card-body"><h3>Aging Solar Assets</h3><p>Solar installations 7+ years old showing degradation. These assets benefit most from our repowering expertise and capital investment.</p></div>
         </div>
-        <div class="asset-card reveal" style="transition-delay:0.3s">
-          <div class="asset-card-visual"><div class="img-slot" data-slot="assets-p3"><div class="slot-pattern"></div><img src="them.jpg" alt="Solar Panel Array"></div></div>
+        <div class="asset-card reveal scale-reveal stagger-2" style="transition-delay:0.3s">
+          <div class="asset-card-visual blur-fade"><div class="img-slot" data-slot="assets-p3"><div class="slot-pattern"></div><img src="them.jpg" alt="Solar Panel Array"></div></div>
           <div class="asset-card-body"><h3>Underperforming Projects</h3><p>Solar farms producing below expected levels due to equipment failures, poor design, or inadequate maintenance.</p></div>
         </div>
-        <div class="asset-card reveal" style="transition-delay:0.4s">
-          <div class="asset-card-visual"><div class="img-slot" data-slot="assets-p4"><div class="slot-pattern"></div><img src="there.jpg" alt="Solar Upgrade"></div></div>
+        <div class="asset-card reveal scale-reveal stagger-3" style="transition-delay:0.4s">
+          <div class="asset-card-visual blur-fade"><div class="img-slot" data-slot="assets-p4"><div class="slot-pattern"></div><img src="there.jpg" alt="Solar Upgrade"></div></div>
           <div class="asset-card-body"><h3>Repowering Opportunities</h3><p>Projects where significant performance improvements can be achieved through panel replacement, inverter upgrades, or system redesign.</p></div>
         </div>
       </div>
@@ -1908,8 +2052,8 @@ a { text-decoration: none; color: inherit; }
 
   <section class="scroll-animation-section">
     <div class="container reveal">
-      <div class="scroll-title">
-        <h2>See Our Assets in <span>Motion</span></h2>
+      <div class="scroll-title blur-fade">
+        <h2 class="rotate-in">See Our Assets in <span>Motion</span></h2>
         <p>Scroll to experience how we transform aging solar infrastructure into modern, high-performing energy assets.</p>
       </div>
       <div class="scroll-container" id="scrollContainer">
@@ -1926,14 +2070,14 @@ a { text-decoration: none; color: inherit; }
     <div class="container">
       <div class="section-header reveal"><span class="overline">Project Criteria</span><h2>Ideal Asset Characteristics</h2><p>While we evaluate each opportunity individually, our preferred acquisition targets share these characteristics.</p></div>
       <div class="criteria-grid">
-        <div class="criteria-item reveal" style="transition-delay:0.05s"><div class="criteria-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><span>Utility-scale preferred (5 MW+)</span></div>
-        <div class="criteria-item reveal" style="transition-delay:0.1s"><div class="criteria-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><span>Existing grid interconnection agreement</span></div>
-        <div class="criteria-item reveal" style="transition-delay:0.15s"><div class="criteria-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><span>Operational or near-operational status</span></div>
-        <div class="criteria-item reveal" style="transition-delay:0.2s"><div class="criteria-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><span>Located in North America</span></div>
-        <div class="criteria-item reveal" style="transition-delay:0.25s"><div class="criteria-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><span>Existing PPA or merchant revenue</span></div>
-        <div class="criteria-item reveal" style="transition-delay:0.3s"><div class="criteria-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><span>Clear title and land rights</span></div>
-        <div class="criteria-item reveal" style="transition-delay:0.35s"><div class="criteria-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><span>Ground-mounted or commercial rooftop</span></div>
-        <div class="criteria-item reveal" style="transition-delay:0.4s"><div class="criteria-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><span>All major equipment manufacturers</span></div>
+        <div class="criteria-item reveal slide-in-left stagger-0" style="transition-delay:0.05s"><div class="criteria-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><span>Utility-scale preferred (5 MW+)</span></div>
+        <div class="criteria-item reveal slide-in-left stagger-1" style="transition-delay:0.1s"><div class="criteria-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><span>Existing grid interconnection agreement</span></div>
+        <div class="criteria-item reveal slide-in-left stagger-2" style="transition-delay:0.15s"><div class="criteria-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><span>Operational or near-operational status</span></div>
+        <div class="criteria-item reveal slide-in-left stagger-3" style="transition-delay:0.2s"><div class="criteria-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><span>Located in North America</span></div>
+        <div class="criteria-item reveal slide-in-right stagger-0" style="transition-delay:0.25s"><div class="criteria-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><span>Existing PPA or merchant revenue</span></div>
+        <div class="criteria-item reveal slide-in-right stagger-1" style="transition-delay:0.3s"><div class="criteria-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><span>Clear title and land rights</span></div>
+        <div class="criteria-item reveal slide-in-right stagger-2" style="transition-delay:0.35s"><div class="criteria-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><span>Ground-mounted or commercial rooftop</span></div>
+        <div class="criteria-item reveal slide-in-right stagger-3" style="transition-delay:0.4s"><div class="criteria-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><span>All major equipment manufacturers</span></div>
       </div>
     </div>
   </section>
@@ -2076,53 +2220,198 @@ document.querySelectorAll('.slot-pattern').forEach(grid => {
   }
 })();
 
-// SCROLL ANIMATION EFFECT - Vanilla JS version inspired by Framer Motion
+// SCROLL ANIMATION EFFECT - Advanced Multi-Type Animations
 function initScrollAnimation() {
-  const container = document.getElementById('scrollContainer');
-  const content = document.getElementById('scrollContent');
+  const containers = document.querySelectorAll('.scroll-container');
   
-  if (!container || !content) return;
+  if (containers.length === 0) return;
   
   function updateScrollAnimation() {
-    const rect = container.getBoundingClientRect();
-    const containerTop = rect.top;
-    const containerHeight = rect.height;
-    const windowHeight = window.innerHeight;
+    containers.forEach(container => {
+      const content = container.querySelector('.scroll-content');
+      if (!content) return;
+      
+      const rect = container.getBoundingClientRect();
+      const containerTop = rect.top;
+      const containerHeight = rect.height;
+      const windowHeight = window.innerHeight;
+      
+      const scrollProgress = Math.max(0, Math.min(1, 
+        (windowHeight - containerTop) / (windowHeight + containerHeight)
+      ));
+      
+      const rotateX = 20 * (1 - scrollProgress);
+      const scale = 1.05 - (0.05 * scrollProgress);
+      const translateY = -100 * scrollProgress;
+      
+      content.style.transform = `perspective(1000px) rotateX(${rotateX}deg) scale(${scale}) translateY(${translateY}px)`;
+      
+      const shadowIntensity = 1 - (0.5 * scrollProgress);
+      content.style.boxShadow = `
+        0 0 #0000004d, 
+        0 ${9 * shadowIntensity}px ${20 * shadowIntensity}px rgba(0,0,0,${0.29 * shadowIntensity}), 
+        0 ${37 * shadowIntensity}px ${37 * shadowIntensity}px rgba(0,0,0,${0.26 * shadowIntensity}), 
+        0 ${84 * shadowIntensity}px ${50 * shadowIntensity}px rgba(0,0,0,${0.15 * shadowIntensity}), 
+        0 ${149 * shadowIntensity}px ${60 * shadowIntensity}px rgba(0,0,0,${0.06 * shadowIntensity}), 
+        0 ${233 * shadowIntensity}px ${65 * shadowIntensity}px rgba(0,0,0,${0.02 * shadowIntensity})
+      `;
+    });
     
-    // Calculate scroll progress (0 to 1)
-    const scrollProgress = Math.max(0, Math.min(1, 
-      (windowHeight - containerTop) / (windowHeight + containerHeight)
-    ));
+    // Trigger blur fade animations
+    updateBlurFadeAnimations();
     
-    // Interpolate between values based on scroll progress
-    const rotateX = 20 * (1 - scrollProgress); // Rotate from 20deg to 0deg
-    const scale = 1.05 - (0.05 * scrollProgress); // Scale from 1.05 to 1
-    const translateY = -100 * scrollProgress; // Translate from 0 to -100px
+    // Trigger scale reveal animations
+    updateScaleRevealAnimations();
     
-    // Apply transforms
-    content.style.transform = `perspective(1000px) rotateX(${rotateX}deg) scale(${scale}) translateY(${translateY}px)`;
+    // Trigger floating animations
+    updateFloatingAnimations();
     
-    // Update box shadow to create depth
-    const shadowIntensity = 1 - (0.5 * scrollProgress);
-    content.style.boxShadow = `
-      0 0 #0000004d, 
-      0 ${9 * shadowIntensity}px ${20 * shadowIntensity}px rgba(0,0,0,${0.29 * shadowIntensity}), 
-      0 ${37 * shadowIntensity}px ${37 * shadowIntensity}px rgba(0,0,0,${0.26 * shadowIntensity}), 
-      0 ${84 * shadowIntensity}px ${50 * shadowIntensity}px rgba(0,0,0,${0.15 * shadowIntensity}), 
-      0 ${149 * shadowIntensity}px ${60 * shadowIntensity}px rgba(0,0,0,${0.06 * shadowIntensity}), 
-      0 ${233 * shadowIntensity}px ${65 * shadowIntensity}px rgba(0,0,0,${0.02 * shadowIntensity})
-    `;
+    // Trigger slide in animations
+    updateSlideInAnimations();
+    
+    // Trigger rotate in animations
+    updateRotateInAnimations();
   }
   
-  // Update on scroll
   window.addEventListener('scroll', updateScrollAnimation, { passive: true });
-  // Initial call
   updateScrollAnimation();
 }
 
+// BLUR FADE ANIMATION
+function updateBlurFadeAnimations() {
+  const elements = document.querySelectorAll('.blur-fade');
+  elements.forEach(el => {
+    const rect = el.getBoundingClientRect();
+    const isVisible = rect.top < window.innerHeight * 0.75 && rect.bottom > window.innerHeight * 0.25;
+    if (isVisible) {
+      el.classList.add('active');
+    }
+  });
+}
+
+// SCALE REVEAL ANIMATION
+function updateScaleRevealAnimations() {
+  const elements = document.querySelectorAll('.scale-reveal');
+  elements.forEach(el => {
+    const rect = el.getBoundingClientRect();
+    const isVisible = rect.top < window.innerHeight * 0.7;
+    if (isVisible && !el.dataset.animated) {
+      el.classList.add('active');
+      el.dataset.animated = 'true';
+    }
+  });
+}
+
+// FLOATING ANIMATION
+function updateFloatingAnimations() {
+  const elements = document.querySelectorAll('.float-element');
+  elements.forEach(el => {
+    const rect = el.getBoundingClientRect();
+    const isInView = rect.top < window.innerHeight && rect.bottom > 0;
+    if (isInView && !el.classList.contains('animate')) {
+      el.classList.add('animate');
+    }
+  });
+}
+
+// SLIDE IN ANIMATIONS
+function updateSlideInAnimations() {
+  const leftElements = document.querySelectorAll('.slide-in-left');
+  const rightElements = document.querySelectorAll('.slide-in-right');
+  
+  leftElements.forEach(el => {
+    const rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight * 0.75) {
+      el.classList.add('active');
+    }
+  });
+  
+  rightElements.forEach(el => {
+    const rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight * 0.75) {
+      el.classList.add('active');
+    }
+  });
+}
+
+// ROTATE IN ANIMATIONS
+function updateRotateInAnimations() {
+  const elements = document.querySelectorAll('.rotate-in');
+  elements.forEach(el => {
+    const rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight * 0.75) {
+      el.classList.add('active');
+    }
+  });
+}
+
+// TEXT LETTER REVEAL ANIMATION
+function initTextLetterReveal() {
+  const textElements = document.querySelectorAll('.text-reveal');
+  textElements.forEach(el => {
+    const text = el.textContent;
+    el.innerHTML = text.split('').map(letter => 
+      letter === ' ' ? '<span class="letter">&nbsp;</span>' : `<span class="letter">${letter}</span>`
+    ).join('');
+    
+    const rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight) {
+      setTimeout(() => el.classList.add('active'), 100);
+    }
+  });
+  
+  window.addEventListener('scroll', () => {
+    document.querySelectorAll('.text-reveal').forEach(el => {
+      if (!el.classList.contains('active')) {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight * 0.75) {
+          el.classList.add('active');
+        }
+      }
+    });
+  }, { passive: true });
+}
+
+// PARALLAX SCROLL EFFECT
+function initParallaxScrollEffect() {
+  const parallaxElements = document.querySelectorAll('[data-parallax]');
+  if (parallaxElements.length === 0) return;
+  
+  window.addEventListener('scroll', () => {
+    parallaxElements.forEach(el => {
+      const speed = el.dataset.parallax || 0.5;
+      const yPos = window.scrollY * speed;
+      el.style.transform = `translateY(${yPos}px)`;
+    });
+  }, { passive: true });
+}
+
+// GRADIENT SHIFT ON SCROLL
+function initGradientShiftOnScroll() {
+  const gradientElements = document.querySelectorAll('[data-gradient-shift]');
+  if (gradientElements.length === 0) return;
+  
+  window.addEventListener('scroll', () => {
+    const scrollPercent = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+    gradientElements.forEach(el => {
+      el.style.backgroundPosition = `${scrollPercent}% 50%`;
+    });
+  }, { passive: true });
+}
+
 // Initialize scroll animation when page loads
-window.addEventListener('load', initScrollAnimation);
-document.addEventListener('DOMContentLoaded', initScrollAnimation);
+window.addEventListener('load', () => {
+  initScrollAnimation();
+  initTextLetterReveal();
+  initParallaxScrollEffect();
+  initGradientShiftOnScroll();
+});
+document.addEventListener('DOMContentLoaded', () => {
+  initScrollAnimation();
+  initTextLetterReveal();
+  initParallaxScrollEffect();
+  initGradientShiftOnScroll();
+});
 
 function navigateTo(page) {
   currentPage = page;
@@ -2141,6 +2430,9 @@ function navigateTo(page) {
   }
   setTimeout(initReveal, 50);
   setTimeout(initScrollAnimation, 50);
+  setTimeout(initTextLetterReveal, 50);
+  setTimeout(initParallaxScrollEffect, 50);
+  setTimeout(initGradientShiftOnScroll, 50);
 }
 
 // Ensure consistent navbar behavior across all pages
