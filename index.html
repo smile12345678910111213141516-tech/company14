@@ -1634,6 +1634,22 @@ a { text-decoration: none; color: inherit; }
     </div>
   </section>
 
+  <section class="scroll-animation-section">
+    <div class="container reveal">
+      <div class="scroll-title">
+        <h2>Repowering <span>Excellence</span></h2>
+        <p>Experience our commitment to upgrading and optimizing solar infrastructure for maximum performance and returns.</p>
+      </div>
+      <div class="scroll-container">
+        <div class="scroll-content">
+          <div class="scroll-content-inner">
+            <img src="them.jpg" alt="Solar repowering excellence">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section class="section section-dark">
     <div class="container" style="position:relative;z-index:2">
       <div class="section-header reveal">
@@ -1858,6 +1874,22 @@ a { text-decoration: none; color: inherit; }
     </div>
   </section>
 
+  <section class="scroll-animation-section">
+    <div class="container reveal">
+      <div class="scroll-title">
+        <h2>Our Acquisition <span>Process</span></h2>
+        <p>Scroll to see how we streamline the entire transaction from initial contact to closing.</p>
+      </div>
+      <div class="scroll-container">
+        <div class="scroll-content">
+          <div class="scroll-content-inner">
+            <img src="they1.jpg" alt="Acquisition process visualization">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section class="cta-section">
     <div class="cta-accent-line" style="top:35%"></div><div class="cta-accent-line" style="top:65%"></div>
     <div class="container">
@@ -1934,6 +1966,22 @@ a { text-decoration: none; color: inherit; }
         <div class="criteria-item reveal" style="transition-delay:0.3s"><div class="criteria-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><span>Clear title and land rights</span></div>
         <div class="criteria-item reveal" style="transition-delay:0.35s"><div class="criteria-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><span>Ground-mounted or commercial rooftop</span></div>
         <div class="criteria-item reveal" style="transition-delay:0.4s"><div class="criteria-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><span>All major equipment manufacturers</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="scroll-animation-section">
+    <div class="container reveal">
+      <div class="scroll-title">
+        <h2>Assessment & <span>Evaluation</span></h2>
+        <p>Scroll to experience our comprehensive technical and financial evaluation process for solar assets.</p>
+      </div>
+      <div class="scroll-container">
+        <div class="scroll-content">
+          <div class="scroll-content-inner">
+            <img src="there.jpg" alt="Asset evaluation and assessment">
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -2078,40 +2126,46 @@ document.querySelectorAll('.slot-pattern').forEach(grid => {
 
 // SCROLL ANIMATION EFFECT - Vanilla JS version inspired by Framer Motion
 function initScrollAnimation() {
-  const container = document.getElementById('scrollContainer');
-  const content = document.getElementById('scrollContent');
+  // Get all scroll containers on the page
+  const containers = document.querySelectorAll('.scroll-container');
   
-  if (!container || !content) return;
+  if (containers.length === 0) return;
   
   function updateScrollAnimation() {
-    const rect = container.getBoundingClientRect();
-    const containerTop = rect.top;
-    const containerHeight = rect.height;
-    const windowHeight = window.innerHeight;
-    
-    // Calculate scroll progress (0 to 1)
-    const scrollProgress = Math.max(0, Math.min(1, 
-      (windowHeight - containerTop) / (windowHeight + containerHeight)
-    ));
-    
-    // Interpolate between values based on scroll progress
-    const rotateX = 20 * (1 - scrollProgress); // Rotate from 20deg to 0deg
-    const scale = 1.05 - (0.05 * scrollProgress); // Scale from 1.05 to 1
-    const translateY = -100 * scrollProgress; // Translate from 0 to -100px
-    
-    // Apply transforms
-    content.style.transform = `perspective(1000px) rotateX(${rotateX}deg) scale(${scale}) translateY(${translateY}px)`;
-    
-    // Update box shadow to create depth
-    const shadowIntensity = 1 - (0.5 * scrollProgress);
-    content.style.boxShadow = `
-      0 0 #0000004d, 
-      0 ${9 * shadowIntensity}px ${20 * shadowIntensity}px rgba(0,0,0,${0.29 * shadowIntensity}), 
-      0 ${37 * shadowIntensity}px ${37 * shadowIntensity}px rgba(0,0,0,${0.26 * shadowIntensity}), 
-      0 ${84 * shadowIntensity}px ${50 * shadowIntensity}px rgba(0,0,0,${0.15 * shadowIntensity}), 
-      0 ${149 * shadowIntensity}px ${60 * shadowIntensity}px rgba(0,0,0,${0.06 * shadowIntensity}), 
-      0 ${233 * shadowIntensity}px ${65 * shadowIntensity}px rgba(0,0,0,${0.02 * shadowIntensity})
-    `;
+    containers.forEach(container => {
+      // Find the scroll-content element inside this container
+      const content = container.querySelector('.scroll-content');
+      if (!content) return;
+      
+      const rect = container.getBoundingClientRect();
+      const containerTop = rect.top;
+      const containerHeight = rect.height;
+      const windowHeight = window.innerHeight;
+      
+      // Calculate scroll progress (0 to 1)
+      const scrollProgress = Math.max(0, Math.min(1, 
+        (windowHeight - containerTop) / (windowHeight + containerHeight)
+      ));
+      
+      // Interpolate between values based on scroll progress
+      const rotateX = 20 * (1 - scrollProgress); // Rotate from 20deg to 0deg
+      const scale = 1.05 - (0.05 * scrollProgress); // Scale from 1.05 to 1
+      const translateY = -100 * scrollProgress; // Translate from 0 to -100px
+      
+      // Apply transforms
+      content.style.transform = `perspective(1000px) rotateX(${rotateX}deg) scale(${scale}) translateY(${translateY}px)`;
+      
+      // Update box shadow to create depth
+      const shadowIntensity = 1 - (0.5 * scrollProgress);
+      content.style.boxShadow = `
+        0 0 #0000004d, 
+        0 ${9 * shadowIntensity}px ${20 * shadowIntensity}px rgba(0,0,0,${0.29 * shadowIntensity}), 
+        0 ${37 * shadowIntensity}px ${37 * shadowIntensity}px rgba(0,0,0,${0.26 * shadowIntensity}), 
+        0 ${84 * shadowIntensity}px ${50 * shadowIntensity}px rgba(0,0,0,${0.15 * shadowIntensity}), 
+        0 ${149 * shadowIntensity}px ${60 * shadowIntensity}px rgba(0,0,0,${0.06 * shadowIntensity}), 
+        0 ${233 * shadowIntensity}px ${65 * shadowIntensity}px rgba(0,0,0,${0.02 * shadowIntensity})
+      `;
+    });
   }
   
   // Update on scroll
