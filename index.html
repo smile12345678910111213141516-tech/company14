@@ -266,8 +266,22 @@ a { text-decoration: none; color: inherit; }
   width: 24px;
   height: 2px;
   background: var(--white);
-  transition: all 0.3s;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   border-radius: 2px;
+  transform-origin: center;
+}
+
+.hamburger.open span:nth-child(1) {
+  transform: translateY(9px) rotate(45deg);
+}
+
+.hamburger.open span:nth-child(2) {
+  opacity: 0;
+  transform: translateX(10px);
+}
+
+.hamburger.open span:nth-child(3) {
+  transform: translateY(-9px) rotate(-45deg);
 }
 
 .mobile-menu {
@@ -1869,7 +1883,6 @@ a { text-decoration: none; color: inherit; }
       <h1 class="rotate-in">SELL YOUR<br>SOLAR FARM TO<br><span class="gold">REPOWERING<br>PARTNERS</span></h1>
       <p class="blur-fade">We acquire and modernize existing solar assets across the United States. Fast closings, flexible structures, and a commitment to long-term infrastructure ownership.</p>
       <div class="hero-btns">
-        <button class="btn-gold btn-arrow" onclick="navigateTo('contact')">Request an Offer</button>
         <button class="btn-outline" onclick="navigateTo('contact')">Contact Us</button>
       </div>
     </div>
@@ -2629,7 +2642,10 @@ window.addEventListener('scroll', () => {
 }, { passive: true });
 
 function toggleMobile() {
-  document.getElementById('mobileMenu').classList.toggle('open');
+  const mobileMenu = document.getElementById('mobileMenu');
+  const hamburger = document.querySelector('.hamburger');
+  mobileMenu.classList.toggle('open');
+  if (hamburger) hamburger.classList.toggle('open');
 }
 
 function initReveal() {
